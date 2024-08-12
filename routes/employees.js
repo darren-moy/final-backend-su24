@@ -57,6 +57,31 @@ router.post('/', async(req, res, next) => {
   }
 });
 
+/***** DELETE EMPLOYEE: *****/
+router.delete("/:id", function (req, res, next) {
+  Employee.destroy({ where: { id: req.params.id } })
+    .then(() => res.status(200).json("EMPLOYEE DELETED"))
+    .catch((err) => next(err));
+});
+
+/***** ADD EMPLOYEE: *****/
+router.post("/", function (req, res, next) {
+  Employee.create(req.body)
+    .then((newEmployee) => res.status(200).json(newEmployee))
+    .catch((err) => next(err));
+});
+
+/***** EDIT EMPLOYEE: *****/
+router.put("/:id", async (req, res, next) => {
+  try {
+    await Employee.update(req.body, { where: { id: req.params.id } });
+    let updatedEmployee = await Employee.findByPk(req.params.id);
+    res.status(200).json(updatedEmployee);
+  } catch (err) {
+    next(err);
+  }
+});
+
 export {
     router as employeeRouter,
 };

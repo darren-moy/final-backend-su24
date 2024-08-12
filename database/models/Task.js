@@ -9,12 +9,14 @@ export const Task = db.define("task", {
 
   priority: {
     type: Sequelize.INTEGER,
+    allowNull: false,
     defaultValue: 1,
   },
 
   completed: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
+    defaultValue: false,
   },
 });
 
