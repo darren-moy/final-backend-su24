@@ -47,16 +47,6 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', async(req, res, next) => {
-  try {
-    const { firstname, lastname, department } = req.body;
-    const newEmployee = await Employee.create({firstname, lastname, department});
-    res.status(201).json(newEmployee);
-  } catch(err){
-    next(err);
-  }
-});
-
 /***** DELETE EMPLOYEE: *****/
 router.delete("/:id", function (req, res, next) {
   Employee.destroy({ where: { id: req.params.id } })

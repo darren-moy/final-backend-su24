@@ -31,6 +31,24 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
+/* ADD TASK */
+router.post('/', function (req, res, next) {
+  Task.create(req.body)
+    .then((newTask) => res.status(200).json(newTask))
+    .catch((err) => next(err));
+});
+
+/* EDIT TASK */
+router.put("/:id", async (req,res, next) => {
+  try {
+    await Task.update(req.body, {where: {id: req.params.id}});
+    let updatedTask = await Task.findByPk(req.params.id);
+    res.status(200).json(updatedTask);
+  } catch (err) {
+    next(err);
+  }
+});
+
 export {
     router as taskRouter,
 };
