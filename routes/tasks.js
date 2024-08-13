@@ -4,19 +4,17 @@ import { Employee, Task } from '../database/models/index.js';
 //initialize router
 const router = express.Router();
 
-//define routes
-
-/***** GET ALL TASKS: *****/
+// GET ALL TASKS
 router.get('/', async (req, res, next) => {
   try {
-    let tasks = await Task.findAll({include: [Employee]});
+    let tasks = await Task.findAll({ include: [Employee] });
     res.status(200).json(tasks);
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 });
 
-/***** DELETE TASK: *****/
+// DELETE TASK
 router.delete("/:id", async (req, res, next) => {
   try {
     const task = await Task.findByPk(req.params.id);
@@ -31,17 +29,18 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-/* ADD TASK */
+// ADD TASK
 router.post('/', function (req, res, next) {
+  console.log(req.body); // For debugging
   Task.create(req.body)
     .then((newTask) => res.status(200).json(newTask))
     .catch((err) => next(err));
 });
 
-/* EDIT TASK */
-router.put("/:id", async (req,res, next) => {
+// EDIT TASK
+router.put("/:id", async (req, res, next) => {
   try {
-    await Task.update(req.body, {where: {id: req.params.id}});
+    await Task.update(req.body, { where: { id: req.params.id } });
     let updatedTask = await Task.findByPk(req.params.id);
     res.status(200).json(updatedTask);
   } catch (err) {
@@ -50,5 +49,5 @@ router.put("/:id", async (req,res, next) => {
 });
 
 export {
-    router as taskRouter,
+  router as taskRouter,
 };
