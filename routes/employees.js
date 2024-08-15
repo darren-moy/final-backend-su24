@@ -9,7 +9,7 @@ const router = express.Router();
 /** GET ALL EMPLOYEES: */
 router.get('/', async (req, res, next) => {
   try {
-    let employees = await Employee.findAll({include: [Task]});
+    let employees = await Employee.findAll({include: [Task], order: [['id', 'ASC']]});
     res.status(200).json(employees);
   } catch(err) {
     next(err);
