@@ -14,6 +14,11 @@ async function seedDb() {
         firstname: "Walter",
         lastname: "White",
     });
+    const employee3 = await Employee.create({
+        firstname: "Darren",
+        lastname: "Moy",
+        department: "GAMING"
+    })
     
     const task1 = await Task.create({
         content: "Make exams",
@@ -24,9 +29,14 @@ async function seedDb() {
         content: "Organize classroom",
         completed: true,
     });
+    const task3 = await Task.create({
+        content: "Play 5 games of CS2",
+        completed: false,
+    })
 
     await task1.setEmployee(employee2);
     await task2.setEmployee(employee1);
+    await task3.setEmployee(employee3);
 
 }
 
